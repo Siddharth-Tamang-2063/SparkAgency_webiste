@@ -6,5 +6,6 @@ import tailwindcss from '@tailwindcss/vite'
 export default defineConfig({
   plugins: [react(),
     tailwindcss(),
-  ], // just React plugin, no Tailwind plugin here
+  ],
+  base : process.env.VITE_BASE_PATH || "/SparkAgency_webiste" // just React plugin, no Tailwind plugin here
 })
