@@ -17,8 +17,6 @@ gsap.registerPlugin(ScrollTrigger);
 gsap.defaults({ ease: "power3.out", duration: 1 });
 
 export default function App() {
-  const heroBg = useRef(null);
-  const heroText = useRef(null);
   const servicesRef = useRef(null);
   const aboutRef = useRef(null);
   const cardsRef = useRef([]);
@@ -54,70 +52,142 @@ export default function App() {
     setFormData({ name: "", email: "", message: "" });
   };
 
+   const heroBg = useRef(null);
+  const heroText = useRef(null);
+  const heroSub = useRef(null);
+  const heroBtn = useRef(null);
+
+  useEffect(() => {
+  const ctx = gsap.context(() => {
+    // Background slow float
+    gsap.to(heroBg.current, {
+      scale: 1.2,
+      duration: 8,
+      ease: "sine.inOut",
+      yoyo: true,
+      repeat: -1,
+    });
+
+    // Split hero title into words
+    const title = heroText.current;
+    const originalHTML = title.innerHTML;
+
+    const words = title.innerText.split(" ");
+    title.innerHTML = words
+      .map(
+        (word) =>
+          `<span class="word inline-block will-change-transform">${word}&nbsp;</span>`
+      )
+      .join("");
+
+    const wordEls = title.querySelectorAll(".word");
+
+    gsap.set(wordEls, {
+      opacity: 0,
+      y: 80,
+      rotateX: 90,
+      filter: "blur(12px)",
+      transformPerspective: 1000,
+    });
+
+    gsap.to(wordEls, {
+      opacity: 1,
+      y: 0,
+      rotateX: 0,
+      filter: "blur(0px)",
+      duration: 1.2,
+      stagger: 0.08,
+      ease: "power4.out",
+      delay: 0.2,
+    });
+
+    // Subtext
+    gsap.from(heroSub.current, {
+      opacity: 0,
+      y: 30,
+      duration: 1,
+      delay: 1,
+      ease: "power3.out",
+    });
+
+    // Button
+  gsap.fromTo(
+  heroBtn.current,
+  { opacity: 0, scale: 0.85 },
+  {
+    opacity: 1,
+    scale: 1,
+    duration: 0.8,
+    delay: 1.2,
+    ease: "back.out(1.7)",
+  }
+);
+
+
+    return () => {
+      title.innerHTML = originalHTML;
+    };
+  });
+
+  return () => ctx.revert();
+}, []);
+
   // GSAP Scroll Animations
   useEffect(() => {
-    const ctx = gsap.context(() => {
-      gsap.to(heroBg.current, {
-        yPercent: 30,
-        scrollTrigger: {
-          trigger: "#hero",
-          start: "top top",
-          end: "bottom top",
-          scrub: true,
-        },
-      });
-      gsap.from(heroText.current.children, {
-        y: 100,
-        opacity: 0,
-        stagger: 0.15,
-        scrollTrigger: { trigger: "#hero", start: "top 70%" },
-      });
-      gsap.from(".service-card", {
-        y: 120,
-        opacity: 0,
-        stagger: 0.3,
-        scrollTrigger: {
-          trigger: servicesRef.current,
-          start: "top 55%",
-          end: "bottom 70%",
-          scrub: true,
-        },
-      });
-      gsap.to(aboutRef.current, {
-        yPercent: 30, // moves down as you scroll
-        scrollTrigger: {
-          trigger: "#about-parallax",
-          start: "top bottom",
-          end: "bottom top",
-          scrub: true,
-        },
-      });
-
-      cardsRef.current.forEach((card) => {
-        gsap.from(card, {
-          opacity: 0,
-          y: 50,
-          duration: 1,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: card,
-            start: "top 80%",
-            toggleActions: "play none none none",
-          },
-        });
-      });
-      if (contactRef.current) {
-        gsap.from(contactRef.current.children, {
-          opacity: 0,
-          y: 50,
-          stagger: 0.2,
-          duration: 1,
-          scrollTrigger: { trigger: contactRef.current, start: "top 80%" },
-        });
-      }
+  const ctx = gsap.context(() => {
+    gsap.from(".service-card", {
+      y: 120,
+      opacity: 0,
+      stagger: 0.3,
+      scrollTrigger: {
+        trigger: servicesRef.current,
+        start: "top 55%",
+        end: "bottom 70%",
+        scrub: true,
+      },
     });
-    return () => ctx.revert();
-  }, []);
+
+    gsap.to(aboutRef.current, {
+      yPercent: 30,
+      scrollTrigger: {
+        trigger: "#about-parallax",
+        start: "top bottom",
+        end: "bottom top",
+        scrub: true,
+      },
+    });
+
+    cardsRef.current.forEach((card) => {
+      gsap.from(card, {
+        opacity: 0,
+        y: 50,
+        duration: 1,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: card,
+          start: "top 80%",
+          toggleActions: "play none none none",
+        },
+      });
+    });
+
+    if (contactRef.current) {
+      gsap.from(contactRef.current.children, {
+        opacity: 0,
+        y: 50,
+        stagger: 0.2,
+        duration: 1,
+        scrollTrigger: {
+          trigger: contactRef.current,
+          start: "top 80%",
+        },
+      });
+    }
+  });
+
+  return () => ctx.revert();
+}, []);
+
 
   // Hover effects
   useEffect(() => {
@@ -275,37 +345,47 @@ export default function App() {
       </header>
 
       {/* HERO */}
-      <section
-        id="home"
-        className="relative min-h-screen flex items-center justify-center overflow-hidden"
-      >
-        <div
-          ref={heroBg}
-          className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,#1E3A8A,rgba(30,58,138,0.6))]  scale-110"
-        />
-        <div
-          ref={heroText}
-          className="relative z-10 max-w-4xl text-center px-6"
-        >
-          <h1 className="text-5xl md:text-7xl font-bold text-white leading-tight">
-            We Build <br /> Digital Experiences
-          </h1>
-          <p className="mt-6 text-xl text-white/80">
-            High-end websites, marketing & automation for modern brands.
-          </p>
-          <div className="mt-10 flex flex-col sm:flex-row gap-6 justify-center">
-            <a
-              href="https://calendar.google.com/calendar/u/0/r/eventedit?text=Book+a+Call&dates=20251227T090000Z/20251227T100000Z&details=Schedule+a+call+with+Spark+Agency&location=Online&trp=false&add=office.sparkagency@gmail.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="px-10 py-4 bg-[#1E3A8A] text-white rounded-full font-semibold hover:bg-white hover:text-[#1E3A8A] transition"
-            >
-              Book a Call
-            </a>
-          </div>
-        </div>
-      </section>
+  <section
+  id="home"
+  className="relative min-h-screen flex items-center justify-center overflow-hidden bg-[#1E3A8A]"
+>
 
+      {/* Background */}
+     <div
+  ref={heroBg}
+  className="absolute inset-0 -z-10 pointer-events-none bg-[radial-gradient(circle_at_20%_20%,#1E3A8A,rgba(30,58,138,0.6))] scale-110"
+/>
+
+
+      {/* Content */}
+      <div className="relative z-10 max-w-4xl text-center px-6">
+        <h1
+          ref={heroText}
+          className="text-5xl md:text-7xl font-bold text-white leading-tight"
+        >
+          We Build <br /> Digital Experiences
+        </h1>
+
+        <p
+          ref={heroSub}
+          className="mt-6 text-xl text-white/80"
+        >
+          High-end websites, marketing & automation for modern brands.
+        </p>
+
+        <div className="mt-10 flex justify-center">
+          <a
+            ref={heroBtn}
+            href="https://calendar.google.com/calendar/u/0/r/eventedit?text=Book+a+Call&dates=20251227T090000Z/20251227T100000Z&details=Schedule+a+call+with+Spark+Agency&location=Online&trp=false&add=office.sparkagency@gmail.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="px-10 py-4 bg-[#172E6F] text-white rounded-full font-semibold hover:bg-white hover:text-[#1E3A8A] transition-all duration-300"
+          >
+            Book a Call
+          </a>
+        </div>
+      </div>
+    </section>
       {/* SERVICES */}
       <section
         id="services"
