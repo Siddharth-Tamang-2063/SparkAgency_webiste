@@ -403,85 +403,85 @@ export default function App() {
           <h3 id="about" className="text-4xl font-bold text-[#020617] mb-14">
             Meet the Founders
           </h3>
+<div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-14">
+  {/* SID */}
+  <div
+    ref={(el) => (cardsRef.current[0] = el)}
+    className="group relative bg-white rounded-3xl p-6 sm:p-8 md:p-10 shadow-xl border border-gray-100 hover:shadow-2xl transition"
+  >
+    <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-[#1E3A8A]/10 to-transparent opacity-0 group-hover:opacity-100 transition" />
 
-          <div className="grid md:grid-cols-2 gap-14">
-            {/* SID */}
-            {/* SID */}
-            <div
-              ref={(el) => (cardsRef.current[0] = el)}
-              className="group relative bg-white rounded-3xl p-10 shadow-xl border border-gray-100 hover:shadow-2xl transition"
-            >
-              <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-[#1E3A8A]/10 to-transparent opacity-0 group-hover:opacity-100 transition" />
+    <div className="relative z-10 flex flex-col sm:grid sm:grid-cols-[100px_1fr] md:grid-cols-[120px_1fr] gap-6 sm:gap-8 items-center sm:items-start text-center sm:text-left">
+      {/* PHOTO */}
+      <img
+        src={sidImg}
+        alt="Siddharth Tamang"
+        className="w-24 h-24 sm:w-28 sm:h-28 rounded-full object-cover border border-blue-200 shadow-md"
+      />
 
-              <div className="relative z-10 grid grid-cols-[120px_1fr] gap-8 items-center">
-                {/* PHOTO */}
-                <img
-                  src={sidImg}
-                  alt="Siddharth Tamang"
-                  className="w-28 h-28 rounded-full object-cover border border-blue-200 shadow-md"
-                />
+      {/* CONTENT */}
+      <div>
+        <h4 className="text-2xl sm:text-3xl font-semibold text-[#020617]">
+          Siddharth Tamang
+        </h4>
 
-                {/* CONTENT */}
-                <div>
-                  <h4 className="text-3xl font-semibold text-[#020617]">
-                    Siddharth Tamang
-                  </h4>
-                  <p className="mt-1 text-sm uppercase tracking-wider text-[#1E3A8A] font-medium">
-                    Co-Founder · Developer · Editor · Copywriter
-                  </p>
+        <p className="mt-1 text-xs sm:text-sm uppercase tracking-wider text-[#1E3A8A] font-medium">
+          Co-Founder · Developer · Editor · Copywriter
+        </p>
 
-                  <p className="mt-4 text-gray-700 leading-relaxed">
-                    Architect of systems, performance, and messaging. Siddharth
-                    engineers scalable products, writes high-converting copy,
-                    and ensures everything shipped is fast, precise, and
-                    battle-tested.
-                  </p>
+        <p className="mt-4 text-sm sm:text-base text-gray-700 leading-relaxed">
+          Architect of systems, performance, and messaging. Siddharth engineers
+          scalable products, writes high-converting copy, and ensures everything
+          shipped is fast, precise, and battle-tested.
+        </p>
 
-                  <p className="mt-3 text-gray-600 text-sm">
-                    Focus: Full-stack development · Automation · Conversion
-                    logic
-                  </p>
-                </div>
-              </div>
-            </div>
+        <p className="mt-3 text-xs sm:text-sm text-gray-600">
+          Focus: Full-stack development · Automation · Conversion logic
+        </p>
+      </div>
+    </div>
+  </div>
 
-            {/* KARAN */}
-            <div
-              ref={(el) => (cardsRef.current[1] = el)}
-              className="group relative bg-white rounded-3xl p-10 shadow-xl border border-gray-100 hover:shadow-2xl transition"
-            >
-              <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-[#1E3A8A]/10 to-transparent opacity-0 group-hover:opacity-100 transition" />
+  {/* KARAN */}
+  <div
+    ref={(el) => (cardsRef.current[1] = el)}
+    className="group relative bg-white rounded-3xl p-6 sm:p-8 md:p-10 shadow-xl border border-gray-100 hover:shadow-2xl transition"
+  >
+    <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-[#1E3A8A]/10 to-transparent opacity-0 group-hover:opacity-100 transition" />
 
-              <div className="relative z-10 grid grid-cols-[120px_1fr] gap-8 items-center">
-                {/* PHOTO */}
-                <img
-                  src={karanImg}
-                  alt="Karan Kumar Kamat"
-                  className="w-28 h-28 rounded-full object-cover border border-blue-200 shadow-md"
-                />
+    <div className="relative z-10 flex flex-col sm:grid sm:grid-cols-[100px_1fr] md:grid-cols-[120px_1fr] gap-6 sm:gap-8 items-center sm:items-start text-center sm:text-left">
+      {/* PHOTO */}
+      <img
+        src={karanImg}
+        alt="Karan Kumar Kamat"
+        className="w-24 h-24 sm:w-28 sm:h-28 rounded-full object-cover border border-blue-200 shadow-md"
+      />
 
-                {/* CONTENT */}
-                <div>
-                  <h4 className="text-3xl font-semibold text-[#020617]">
-                    Karan Kumar Kamat
-                  </h4>
-                  <p className="mt-1 text-sm uppercase tracking-wider text-[#1E3A8A] font-medium">
-                    Co-Founder · Designer · Digital Marketer · Ads Specialist
-                  </p>
+      {/* CONTENT */}
+      <div>
+        <h4 className="text-2xl sm:text-3xl font-semibold text-[#020617]">
+          Karan Kumar Kamat
+        </h4>
 
-                  <p className="mt-4 text-gray-700 leading-relaxed">
-                    Designs brands people remember and campaigns people click.
-                    Karan blends high-end visuals with data-driven marketing to
-                    convert attention into revenue.
-                  </p>
+        <p className="mt-1 text-xs sm:text-sm uppercase tracking-wider text-[#1E3A8A] font-medium">
+          Co-Founder · Designer · Digital Marketer · Ads Specialist
+        </p>
 
-                  <p className="mt-3 text-gray-600 text-sm">
-                    Focus: UI/UX · Branding · Paid Ads · Growth strategy
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
+        <p className="mt-4 text-sm sm:text-base text-gray-700 leading-relaxed">
+          Designs brands people remember and campaigns people click. Karan blends
+          high-end visuals with data-driven marketing to convert attention into
+          revenue.
+        </p>
+
+        <p className="mt-3 text-xs sm:text-sm text-gray-600">
+          Focus: UI/UX · Branding · Paid Ads · Growth strategy
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+        
         </div>
       </section>
 
@@ -677,7 +677,7 @@ export default function App() {
                 href="tel:+9779708729008"
                 className="hover:text-gray-300 transition"
               >
-                +977 9708729008, +977 9804005610
+                +977 9708729008, +977 9702048730
               </a>
             </p>
             <p>Location: Biratnagar, Nepal</p>
