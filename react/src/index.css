@@ -1,7 +1,198 @@
-@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
-
 @import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap');
 
-@theme{
-    --font-roboto: "Bebas Neue", sans-serif;; 
+
+
+/* ─── Design Tokens ─────────────────────────────── */
+:root {
+    --bg: #080808;
+    --text: #F0EDE8;
+    --accent: #E8FF47;
+    --muted: rgba(240, 237, 232, 0.4);
+    --border: rgba(240, 237, 232, 0.07);
+    --surface: #0C0C0C;
+}
+
+/* ─── Reset ─────────────────────────────────────── */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* ─── Noise Grain Overlay ────────────────────────── */
+body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 9998;
+    opacity: 0.028;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 256px 256px;
+}
+
+/* ─── Custom Cursor ──────────────────────────────── */
+.cursor-dot,
+.cursor-ring {
+    position: fixed;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    z-index: 99999;
+    border-radius: 50%;
+    mix-blend-mode: difference;
+    transform: translate(-50%, -50%);
+    will-change: transform;
+}
+
+.cursor-dot {
+    width: 6px;
+    height: 6px;
+    background: #F0EDE8;
+}
+
+.cursor-ring {
+    width: 36px;
+    height: 36px;
+    border: 1px solid rgba(240, 237, 232, 0.55);
+    transition: width 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+        height 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+        opacity 0.3s ease;
+}
+
+.cursor-ring.hover {
+    width: 64px;
+    height: 64px;
+}
+
+/* ─── Typography ─────────────────────────────────── */
+h1,
+h2,
+h3,
+h4,
+h5 {
+    font-family: 'Syne', sans-serif;
+}
+
+/* ─── Scrollbar ──────────────────────────────────── */
+::-webkit-scrollbar {
+    width: 2px;
+}
+
+::-webkit-scrollbar-track {
+    background: #080808;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #E8FF47;
+    border-radius: 4px;
+}
+
+/* ─── Word Split Animation ───────────────────────── */
+.split-word {
+    display: inline-block;
+    overflow: hidden;
+    vertical-align: bottom;
+    line-height: 1;
+}
+
+.split-word-inner {
+    display: inline-block;
+    will-change: transform;
+}
+
+/* ─── Marquee ────────────────────────────────────── */
+@keyframes marquee-scroll {
+    from {
+        transform: translateX(0);
+    }
+
+    to {
+        transform: translateX(-50%);
+    }
+}
+
+.marquee-track {
+    animation: marquee-scroll 32s linear infinite;
+    will-change: transform;
+}
+
+/* ─── Underline Hover ────────────────────────────── */
+.link-line {
+    position: relative;
+    display: inline-block;
+}
+
+.link-line::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: var(--accent);
+    transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.link-line:hover::after {
+    width: 100%;
+}
+
+/* ─── Section fade util ──────────────────────────── */
+.fade-up {
+    opacity: 0;
+    transform: translateY(40px);
+}
+
+/* ─── Glow button ────────────────────────────────── */
+.btn-accent {
+    background: var(--accent);
+    color: #080808;
+    font-weight: 700;
+    border-radius: 99px;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    transition: background 0.25s ease, box-shadow 0.25s ease, gap 0.25s ease;
+
+}
+
+.btn-accent:hover {
+    background: #F0EDE8;
+    box-shadow: 0 0 32px rgba(232, 255, 71, 0.25);
+}
+
+.btn-ghost {
+    color: rgba(240, 237, 232, 0.5);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: color 0.25s ease, gap 0.25s ease;
+
+}
+
+.btn-ghost:hover {
+    color: var(--text);
+    gap: 12px;
+}
+
+/* ─── Service card grid border ───────────────────── */
+.card-grid-border {
+    background-image:
+        linear-gradient(var(--border) 1px, transparent 1px),
+        linear-gradient(90deg, var(--border) 1px, transparent 1px);
 }
